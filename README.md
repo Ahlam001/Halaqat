@@ -1,24 +1,42 @@
-# README
+# نظرة عامة
+هذا المشروع عبارة عن نظام لإدارة وبحث الحلقات (CMS + Discovery) يتيح:
+- رفع الحلقات من YouTube أو رفع فيديوهات مباشرة إلى Amazon S3.
+- إدارة الحلقات، تصنيفها، وتعيين مالك لكل حلقة.
+- البحث والتصفية حسب العنوان، التصنيف، أو المحرر.
+- عرض الحلقات للجمهور من خلال واجهة اكتشاف (Discovery).
+- دعم تعدد الأدوار للمحررين (Editor, رئيس المحررين، إلخ).
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+التقنيات المستخدمة
+ – إطار العمل الأساسيRuby on Rails 7 .
+ - قاعدة البيانات الرئيسية PostgreSQL
+ - تخزين ملفات الفيديو والصور Amazon S3
+ - تصميم واجهة المستخدم Tailwind CSS
+ -  تقسيم النتائج Pagination Kaminari
+ -  إدارة تسجيل الدخول للمحررين Devise
+ 
 
-Things you may want to cover:
+الإعداد والتشغيل محليًا
+المتطلبات:
+لغة Ruby 3.2.2، PostgreSQL 14+ ، Yarn أو npm
 
-* Ruby version
 
-* System dependencies
+حساب AWS S3 (مع مفاتيح)
 
-* Configuration
+#خطوات التشغيل
 
-* Database creation
 
-* Database initialization
+#### تثبيت الباقات >  > bundle install
+#### تهيئة قاعدة البيانات >  rails db:setup
+#### تشغيل الخادم > bin/rails server
 
-* How to run the test suite
+بيانات تسجيل الدخول التجريبية
+البريد: editor@example.com
+كلمة المرور: password123
 
-* Services (job queues, cache servers, search engines, etc.)
+ميزات الأمان
+تشفير بيانات AWS S3 في Rails Credentials.
+استخدام .gitignore لحماية أي ملفات حساسة.
 
-* Deployment instructions
+جميع عمليات البحث باستخدام Scopes لمنع SQL Injection.
+التحكم في الصلاحيات حسب الدور (Role-based access).
 
-* ...
