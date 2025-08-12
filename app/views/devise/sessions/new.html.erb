@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title><%= t("devise.sessions.new.sign_in") %></title>
+</head>
+<body class="bg-slate-100">
+  <div class="min-h-screen flex items-center justify-center p-6">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow p-6 space-y-6">
+      <h1 class="text-xl font-bold text-center"><%= t("devise.sessions.new.sign_in") %></h1>
+
+      <%= form_with model: resource, as: resource_name, url: session_path(resource_name), class: "space-y-4" do |f| %>
+        <div>
+          <%= f.label :email, t("activerecord.attributes.editor.email"), class: "block mb-1" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email",
+                class: "w-full rounded-lg border px-3 py-2" %>
+        </div>
+
+        <div>
+          <%= f.label :password, t("activerecord.attributes.editor.password"), class: "block mb-1" %>
+          <%= f.password_field :password, autocomplete: "current-password",
+                class: "w-full rounded-lg border px-3 py-2" %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="flex items-center gap-2">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me, t("activerecord.attributes.editor.remember_me") %>
+          </div>
+        <% end %>
+
+        <div class="space-y-2">
+          <%= f.submit t("devise.sessions.new.sign_in"),
+                class: "w-full rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white py-2" %>
+
+          <!-- زر الاستكشاف العام (بدون تسجيل) -->
+          <%= link_to "الدخول كزائر للاستكشاف", discovery_home_path,
+                class: "w-full inline-block text-center rounded-xl border py-2 hover:bg-slate-50" %>
+        </div>
+      <% end %>
+
+      <div class="text-center text-sm text-slate-600 space-x-2 space-x-reverse">
+        <% if devise_mapping.registerable? %>
+          <%= link_to t("devise.registrations.new.sign_up"), new_registration_path(resource_name), class: "underline" %>
+        <% end %>
+        <% if devise_mapping.recoverable? %>
+          · <%= link_to t("devise.passwords.new.forgot_your_password"), new_password_path(resource_name), class: "underline" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<div class="max-w-[1400px] mx-auto px-0">
+  <div class="flex items-start gap-4">
+    <aside class="hidden lg:block w-62 shrink-0">
+      <%= render "cms/shared/sidebar" %>
+    </aside>
+
+    <section class="flex-1">
+      <div class="flex items-center gap-2 mb-4">
+        <%= link_to "حلقاتي", cms_episodes_path(tab: "mine"),
+            class: "px-3 py-2 rounded-lg #{ @tab == 'mine' ? 'bg-indigo-600 text-white' : 'bg-white text-slate-700 border' }" %>
+        <%= link_to "حلقات الآخرين", cms_episodes_path(tab: "others"),
+            class: "px-3 py-2 rounded-lg #{ @tab == 'others' ? 'bg-indigo-600 text-white' : 'bg-white text-slate-700 border' }" %>
+      </div>
+
+      <div class="w-full bg-white rounded-xl shadow overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="min-w-full table-auto text-right">
+            <thead>
+              <tr class="border-b bg-slate-50">
+                <th class="p-3 w-50">صورة</th>
+                <th class="p-3">العنوان</th>
+                <th class="p-3">التصنيف</th>
+                <th class="p-3">المالك</th>
+                <th class="p-3">تاريخ النشر</th>
+                <th class="p-3">آخر تعديل</th>
+                <th class="p-3">إجراءات</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @episodes.each do |ep| %>
+                <tr class="border-b hover:bg-slate-50">
+                  <td class="p-3">
+                    <%= image_tag ep.thumbnail_best, alt: ep.title,
+                          class: "block w-60 h-16 object-cover rounded-lg shadow" %>
+                  </td>
+                  <td class="p-3">
+                    <div class="font-semibold truncate max-w-[420px]"><%= ep.title %></div>
+                    <div class="text-sm text-slate-500 truncate max-w-[420px]"><%= ep.description.to_s %></div>
+                  </td>
+                  <td class="p-3"><%= Episode::CATEGORIES.to_h.key(ep.category) || ep.category %></td>
+                  <td class="p-3 text-sm"><%= ep.editor&.id || "-" %></td>
+                  <td class="p-3 text-sm"><%= ep.published_at&.to_date || "-" %></td>
+                  <td class="p-3 text-sm"><%= ep.updated_by_editor&.id || "-" %></td>
+                  <td class="p-3">
+                    <div class="flex gap-2">
+                      <%= link_to "عرض", cms_episode_path(ep),
+                            class: "px-3 py-1.5 rounded-lg border hover:bg-slate-100" %>
+                      <%= link_to "تعديل", edit_cms_episode_path(ep),
+                            class: "px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700" %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+              <% if @episodes.empty? %>
+                <tr><td colspan="7" class="p-6 text-center text-slate-500">لا توجد حلقات هنا بعد.</td></tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

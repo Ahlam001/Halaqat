@@ -1,0 +1,43 @@
+
+<aside class="hidden lg:block">
+  <div class="bg-white rounded-xl border p-4 sticky top-4">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-semibold">المحرّرون</h3>
+      <span class="text-xs text-slate-500"><%= @all_editors.size %></span>
+    </div>
+
+    <ul class="divide-y">
+    <% @all_editors.each do |e| %>
+  <% is_current = (defined?(current_editor) && current_editor && e.id == current_editor.id) %>
+
+  <li class="py-2 flex items-center justify-between gap-3
+             transition-colors rounded-lg
+             <%= is_current ? 'bg-blue-50' : '' %>">
+    <div class="flex items-center gap-2 min-w-0">
+      <!-- Avatar -->
+      <div class="w-8 h-8 rounded-full bg-slate-200 grid place-items-center text-slate-700 text-xs
+                  <%= is_current ? 'ring-2 ring-blue-500 ring-offset-2 ring-offset-blue-50' : '' %>">
+        <%= e.email.to_s.first&.upcase %>
+      </div>
+
+      <div class="min-w-0">
+        <div class="truncate text-sm"><%= e.email %></div>
+        <div class="text-xs text-slate-500">#<%= e.id %></div>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2 shrink-0">
+      <% if is_current %>
+        <span class="text-[11px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">أنت</span>
+      <% end %>
+      <span class="text-xs px-2 py-0.5 rounded-full
+        <%= e.role == 'رئيس المحررين' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700' %>">
+        <%= e.role.presence || 'مسؤول' %>
+      </span>
+    </div>
+  </li>
+<% end %>
+
+    </ul>
+  </div>
+</aside>

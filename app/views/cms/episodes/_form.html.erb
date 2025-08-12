@@ -1,0 +1,69 @@
+
+<%= form_with model: [:cms, @episode], class: "space-y-6" do |f| %>
+  <div>
+    <%= f.label :title, "العنوان", class: "block mb-1 font-medium" %>
+    <%= f.text_field :title, class: "w-full px-3 py-2 rounded-lg border", required: true %>
+  </div>
+
+  <div>
+    <%= f.label :description, "الوصف", class: "block mb-1 font-medium" %>
+    <%= f.text_area :description, rows: 4, class: "w-full px-3 py-2 rounded-lg border" %>
+  </div>
+
+  <div>
+    <%= f.label :category, "التصنيف", class: "block mb-1 font-medium" %>
+    <%= f.select :category,
+                 options_for_select(Episode::CATEGORIES, @episode.category),
+                 {},
+                 class: "w-full px-3 py-2 rounded-lg border" %>
+  </div>
+
+<div data-controller="video-source" class="space-y-4">
+  <div>
+    <%= f.label :source_kind, "نوع المصدر", class: "block mb-1 font-medium" %>
+    <%= f.select :source_kind,
+          options_for_select(Episode.source_kinds.keys.map { |k| [k == "youtube" ? "Youtube" : "Upload", k] }, @episode.source_kind || "youtube"),
+          {},
+          class: "w-full px-3 py-2 rounded-lg border",
+          data: { "video-source-target": "kind", action: "change->video-source#toggle" } %>
+  </div>
+
+  <div data-video-source-target="youtube" class="<%= (@episode.source_kind || "youtube") == "upload" ? "hidden" : "" %>">
+    <%= f.label :source_url, "رابط يوتيوب", class: "block mb-1 font-medium" %>
+    <%= f.url_field :source_url, placeholder: "https://youtu.be/...", class: "w-full px-3 py-2 rounded-lg border" %>
+  </div>
+
+  <div data-video-source-target="upload" class="<%= (@episode.source_kind || "youtube") == "youtube" ? "hidden" : "" %>">
+    <%= f.label :video_file, "رفع ملف فيديو", class: "block mb-1 font-medium" %>
+    <%= f.file_field :video_file, direct_upload: true, accept: "video/mp4", class: "block w-full" %>
+
+  </div>
+</div>
+
+
+  <div class="grid md:grid-cols-3 gap-4">
+    <div>
+      <%= f.label :duration, "المدة (ثوانٍ)", class: "block mb-1 font-medium" %>
+      <%= f.number_field :duration, class: "w-full px-3 py-2 rounded-lg border", min: 0, placeholder: "مثلاً 180" %>
+    </div>
+    <div class="md:col-span-2">
+      <%= f.label :published_at, "تاريخ النشر", class: "block mb-1 font-medium" %>
+      <%= f.datetime_field :published_at, class: "w-full px-3 py-2 rounded-lg border", step: 60 %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :thumbnail_url, "صورة مصغّرة (اختياري — تُستخرج تلقائياً ليوتيوب)", class: "block mb-1 font-medium" %>
+    <%= f.text_field :thumbnail_url, placeholder: "https://…", class: "w-full px-3 py-2 rounded-lg border" %>
+  </div>
+
+  <div class="flex items-center gap-2">
+  <%= f.check_box :active, class: "h-4 w-4 rounded border-slate-300" %>
+  <%= f.label :active, "مفعّلة للمستخدمين؟", class: "text-sm text-slate-700" %>
+</div>
+
+  <div>
+    <%= f.submit (@episode.new_record? ? "إنشاء الحلقة" : "تحديث الحلقة"),
+        class: "px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700" %>
+  </div>
+<% end %>

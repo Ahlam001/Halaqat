@@ -1,0 +1,41 @@
+<div class="max-w-5xl mx-auto p-6">
+
+  <div class="mb-4">
+    <%= link_to (request.referer || discovery_episodes_path),
+        class: "inline-flex items-center gap-2 px-3 py-2 rounded-lg border hover:bg-slate-50" do %>
+      ← عودة
+    <% end %>
+  </div>
+<div class="max-w-4xl mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-4"><%= @episode.title %></h1>
+
+  <% if @episode.respond_to?(:video_file) && @episode.video_file&.attached? %>
+    <%= video_tag url_for(@episode.video_file),
+        controls: true, preload: "metadata", class: "w-full rounded-xl shadow mb-4" %>
+  <% elsif @episode.respond_to?(:embed_url) && @episode.embed_url.present? %>
+    <iframe class="w-full aspect-video rounded-xl mb-4"
+      src="<%= @episode.embed_url %>" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  <% else %>
+    <div class="aspect-video bg-slate-100 rounded-xl mb-4 grid place-items-center text-slate-500">
+      لا يوجد مصدر تشغيل
+    </div>
+  <% end %>
+
+  <p class="text-slate-700 mb-6"><%= simple_format(@episode.description) %></p>
+
+  <div class="bg-white rounded-xl p-4 border grid md:grid-cols-3 gap-4 text-sm">
+    <div>
+      <div class="text-slate-500 mb-1">التصنيف</div>
+      <div><%= Episode::CATEGORIES.to_h.key(@episode.category) || @episode.category || "-" %></div>
+    </div>
+    <div>
+      <div class="text-slate-500 mb-1">المحرّر</div>
+      <div><%= @episode.editor&.email || "-" %></div>
+    </div>
+    <div>
+      <div class="text-slate-500 mb-1">تاريخ النشر</div>
+      <div><%= @episode.published_at&.to_date || "-" %></div>
+    </div>
+  </div>
+</div>
+</div>

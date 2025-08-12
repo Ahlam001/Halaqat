@@ -1,0 +1,39 @@
+ar:
+  activerecord:
+    models:
+      editor: "محرّر"
+    attributes:
+      editor:
+        email: "البريد الإلكتروني"
+        password: "كلمة المرور"
+        remember_me: "تذكّرني"
+  devise:
+    sessions:
+      new:
+        sign_in: "تسجيل الدخول"
+    registrations:
+      new:
+        sign_up: "إنشاء حساب"
+    passwords:
+      new:
+        forgot_your_password: "نسيت كلمة المرور؟"
+  helpers:
+    submit:
+      create: "إنشاء"
+      update: "تحديث"
+
+  date:
+    formats:
+      long: "%-d %B %Y"
+    order:
+      - :day
+      - :month
+      - :year
+    month_names: [~, يناير, فبراير, مارس, أبريل, مايو, يونيو, يوليو, أغسطس, سبتمبر, أكتوبر, نوفمبر, ديسمبر]
+    abbr_month_names: [~, ينا, فبر, مار, أبر, ماي, يون, يول, أغس, سبت, أكت, نوف, ديس]
+  time:
+    formats:
+      long: "%-d %B %Y - %I:%M %p"
+      default: "%Y-%m-%d %H:%M"
+    am: "ص"
+    pm: "م"

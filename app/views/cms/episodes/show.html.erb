@@ -1,0 +1,55 @@
+<div class="max-w-4xl mx-auto p-6">
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="text-2xl font-bold"><%= @episode.title %></h1>
+    <div class="flex gap-2">
+      <%= link_to "تعديل", edit_cms_episode_path(@episode), class: "px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700" %>
+      <%= link_to "عودة", cms_episodes_path, class: "px-3 py-1.5 rounded-lg border hover:bg-slate-100" %>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="md:col-span-2">
+
+ <% if @episode.youtube? %>
+  <div class="relative w-full aspect-video rounded-xl overflow-hidden shadow">
+    <iframe class="absolute inset-0 w-full h-full"
+      src="<%= @episode.embed_url %>"
+      allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+<% elsif @episode.upload? %>
+  <video controls class="w-full rounded-xl shadow"
+         preload="metadata"
+         <%= @episode.thumbnail_image.attached? ? "poster='#{url_for(@episode.thumbnail_image)}'" : "" %>>
+    <source src="<%= url_for(@episode.video_file) %>" type="<%= @episode.video_file.content_type %>">
+  </video>
+
+<% else %>
+  <div class="text-slate-500">لا يوجد مصدر تشغيل</div>
+<% end %>
+
+
+      <p class="mt-4 text-slate-700"><%= simple_format(@episode.description) %></p>
+    </div>
+
+    <div class="bg-white rounded-xl p-4 border">
+      <div class="text-sm text-slate-500 mb-2">المالك</div>
+      <div class="font-medium mb-4"><%= @episode.editor&.email || "-" %></div>
+
+      <div class="text-sm text-slate-500 mb-2">أُنشئت بواسطة</div>
+      <div class="mb-4"><%= @episode.created_by_editor&.email || "-" %></div>
+
+      <div class="text-sm text-slate-500 mb-2">آخر تعديل بواسطة</div>
+      <div class="mb-4"><%= @episode.updated_by_editor&.email || "-" %></div>
+
+      <div class="text-sm text-slate-500 mb-2">المدة</div>
+      <div class="mb-4"><%= @episode.formatted_duration %></div>
+
+      <div class="text-sm text-slate-500 mb-2">التصنيف</div>
+      <div class="mb-4"><%= Episode::CATEGORIES.to_h.key(@episode.category) || @episode.category %></div>
+
+      <div class="text-sm text-slate-500 mb-2">تاريخ النشر</div>
+      <div><%= @episode.published_at ? I18n.l(@episode.published_at, format: :long) : "-" %></div>
+
+    </div>
+  </div>
+</div>
