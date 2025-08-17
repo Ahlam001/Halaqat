@@ -40,3 +40,18 @@
 جميع عمليات البحث باستخدام Scopes لمنع SQL Injection.
 التحكم في الصلاحيات حسب الدور (Role-based access).
 
+https://github.com/user-attachments/assets/12e0fe33-8e51-4959-8a3a-a9446ec3730e
+
+
+
+https://github.com/user-attachments/assets/25ddfcda-94b0-41e1-836c-356f4af6c531
+
+
+https://github.com/user-attachments/assets/3e17745d-dd7a-4962-a557-4091b128bad3
+
+
+
+https://github.com/user-attachments/assets/4f8fa344-4b02-4af9-a48d-f1254ad8f424
+
+
+
